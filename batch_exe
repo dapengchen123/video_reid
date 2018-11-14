@@ -1,0 +1,3 @@
+#!/bin/bash
+echo “the 1st progamme ”
+python3 ilivids_data.py -b 64 --seq_len 10 --seq_srd 5 --split 0 --epoch 30 --lr1 1e-3 --lr2 1e-3 --lr3 1 --train_mode cnn_rnn --lr1step 20 --lr2step 10 --lr3step 30 --logs-dir logs2/standard_mean_pooling_10_5

@@ -1,0 +1,279 @@
+Files already downloaded and verified
+iLIDSVIDSEQUENCE dataset loaded
+  subset   | # ids | # sequences
+  ---------------------------
+  train    |   149 |     3631
+  val      |     1 |       22
+  trainval |   150 |     3653
+  query    |   150 |      150
+  gallery  |   150 |      150
+0.001
+0.001
+1.0
+Epoch: [0][50/115]	Loss 10.092 (12.956)	prec_oim 20.31% (9.67%)	prec_score 87.40% (90.98%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [0][100/115]	Loss 7.629 (10.773)	prec_oim 21.88% (15.04%)	prec_score 93.65% (91.07%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.196 (0.244)	Data 0.001 (0.025)	
+Extract Features: [100/223]	Time 0.212 (0.228)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.188 (0.220)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.200 (0.217)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 54.7%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          47.3%       47.3%       47.3%
+  top-5          80.7%       80.7%       80.7%
+  top-10         88.0%       88.0%       88.0%
+0.0008912509381337456
+0.001
+1.0
+Epoch: [1][50/115]	Loss 4.856 (5.853)	prec_oim 35.78% (31.98%)	prec_score 97.66% (95.52%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [1][100/115]	Loss 3.377 (5.081)	prec_oim 51.72% (36.32%)	prec_score 98.34% (96.29%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0007943282347242815
+0.001
+1.0
+Epoch: [2][50/115]	Loss 2.718 (3.770)	prec_oim 54.37% (45.66%)	prec_score 98.83% (97.81%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [2][100/115]	Loss 2.408 (3.367)	prec_oim 57.66% (48.52%)	prec_score 99.32% (98.16%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0007079457843841379
+0.001
+1.0
+Epoch: [3][50/115]	Loss 2.748 (2.914)	prec_oim 58.75% (53.18%)	prec_score 98.63% (98.71%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [3][100/115]	Loss 1.706 (2.596)	prec_oim 69.22% (56.09%)	prec_score 99.22% (98.85%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.180 (0.235)	Data 0.001 (0.026)	
+Extract Features: [100/223]	Time 0.231 (0.224)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.196 (0.219)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.209 (0.219)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 75.7%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          72.0%       72.0%       72.0%
+  top-5          86.7%       86.7%       86.7%
+  top-10         92.7%       92.7%       92.7%
+0.0006309573444801933
+0.001
+1.0
+Epoch: [4][50/115]	Loss 1.814 (2.399)	prec_oim 65.16% (58.74%)	prec_score 99.51% (99.08%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [4][100/115]	Loss 1.636 (2.124)	prec_oim 66.87% (62.13%)	prec_score 99.51% (99.11%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0005623413251903491
+0.001
+1.0
+Epoch: [5][50/115]	Loss 1.876 (2.156)	prec_oim 65.78% (63.39%)	prec_score 98.73% (99.20%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [5][100/115]	Loss 1.120 (1.880)	prec_oim 78.28% (65.77%)	prec_score 99.12% (99.30%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0005011872336272724
+0.001
+1.0
+Epoch: [6][50/115]	Loss 1.398 (1.857)	prec_oim 70.63% (67.70%)	prec_score 99.22% (99.31%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [6][100/115]	Loss 1.133 (1.659)	prec_oim 74.22% (69.11%)	prec_score 99.80% (99.38%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.200 (0.227)	Data 0.001 (0.026)	
+Extract Features: [100/223]	Time 0.216 (0.221)	Data 0.001 (0.014)	
+Extract Features: [150/223]	Time 0.195 (0.217)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.226 (0.216)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 78.6%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          74.7%       74.7%       74.7%
+  top-5          92.0%       92.0%       92.0%
+  top-10         97.3%       97.3%       97.3%
+0.00044668359215096316
+0.001
+1.0
+Epoch: [7][50/115]	Loss 1.635 (1.661)	prec_oim 70.31% (69.60%)	prec_score 99.61% (99.52%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [7][100/115]	Loss 1.038 (1.451)	prec_oim 79.06% (72.19%)	prec_score 99.12% (99.53%)	prec_finalscore(total) 0.00% (0.00%)	
+0.00039810717055349724
+0.001
+1.0
+Epoch: [8][50/115]	Loss 1.238 (1.306)	prec_oim 74.84% (73.61%)	prec_score 99.51% (99.64%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [8][100/115]	Loss 1.346 (1.218)	prec_oim 75.94% (74.99%)	prec_score 99.41% (99.62%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0003548133892335755
+0.001
+1.0
+Epoch: [9][50/115]	Loss 1.197 (1.258)	prec_oim 74.84% (74.96%)	prec_score 99.51% (99.69%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [9][100/115]	Loss 1.244 (1.139)	prec_oim 72.97% (76.92%)	prec_score 99.90% (99.67%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.201 (0.235)	Data 0.001 (0.026)	
+Extract Features: [100/223]	Time 0.198 (0.224)	Data 0.001 (0.014)	
+Extract Features: [150/223]	Time 0.218 (0.220)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.206 (0.218)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 81.3%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          78.0%       78.0%       78.0%
+  top-5          93.3%       93.3%       93.3%
+  top-10         96.7%       96.7%       96.7%
+0.00031622776601683794
+1e-05
+1.0
+Epoch: [10][50/115]	Loss 1.008 (1.163)	prec_oim 79.06% (77.08%)	prec_score 99.41% (99.64%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [10][100/115]	Loss 1.300 (1.086)	prec_oim 79.53% (77.97%)	prec_score 98.83% (99.65%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0002818382931264454
+1e-05
+1.0
+Epoch: [11][50/115]	Loss 1.282 (1.073)	prec_oim 73.75% (78.55%)	prec_score 100.00% (99.74%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [11][100/115]	Loss 1.149 (1.018)	prec_oim 74.38% (79.36%)	prec_score 99.80% (99.74%)	prec_finalscore(total) 0.00% (0.00%)	
+0.000251188643150958
+1e-05
+1.0
+Epoch: [12][50/115]	Loss 0.992 (0.987)	prec_oim 80.47% (80.44%)	prec_score 99.41% (99.72%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [12][100/115]	Loss 0.506 (0.932)	prec_oim 87.81% (81.00%)	prec_score 100.00% (99.75%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.203 (0.236)	Data 0.001 (0.027)	
+Extract Features: [100/223]	Time 0.189 (0.223)	Data 0.001 (0.014)	
+Extract Features: [150/223]	Time 0.214 (0.220)	Data 0.001 (0.010)	
+Extract Features: [200/223]	Time 0.174 (0.218)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 80.8%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          77.3%       77.3%       77.3%
+  top-5          92.0%       92.0%       92.0%
+  top-10         98.0%       98.0%       98.0%
+0.00022387211385683394
+1e-05
+1.0
+Epoch: [13][50/115]	Loss 0.737 (1.033)	prec_oim 85.31% (79.67%)	prec_score 99.71% (99.64%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [13][100/115]	Loss 1.329 (0.953)	prec_oim 81.09% (80.72%)	prec_score 99.12% (99.69%)	prec_finalscore(total) 0.00% (0.00%)	
+0.000199526231496888
+1e-05
+1.0
+Epoch: [14][50/115]	Loss 0.730 (0.884)	prec_oim 86.88% (82.27%)	prec_score 99.32% (99.76%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [14][100/115]	Loss 0.833 (0.832)	prec_oim 82.19% (82.98%)	prec_score 100.00% (99.76%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0001778279410038923
+1e-05
+1.0
+Epoch: [15][50/115]	Loss 0.454 (0.764)	prec_oim 91.72% (84.73%)	prec_score 99.71% (99.80%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [15][100/115]	Loss 0.488 (0.780)	prec_oim 89.84% (84.17%)	prec_score 100.00% (99.79%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.279 (0.234)	Data 0.001 (0.025)	
+Extract Features: [100/223]	Time 0.188 (0.220)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.207 (0.218)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.207 (0.217)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 82.1%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          79.3%       79.3%       79.3%
+  top-5          92.0%       92.0%       92.0%
+  top-10         98.0%       98.0%       98.0%
+0.00015848931924611134
+1e-05
+1.0
+Epoch: [16][50/115]	Loss 0.654 (0.807)	prec_oim 86.25% (83.94%)	prec_score 99.90% (99.82%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [16][100/115]	Loss 0.623 (0.769)	prec_oim 87.03% (84.45%)	prec_score 99.90% (99.80%)	prec_finalscore(total) 0.00% (0.00%)	
+0.00014125375446227546
+1e-05
+1.0
+Epoch: [17][50/115]	Loss 0.673 (0.720)	prec_oim 85.31% (85.43%)	prec_score 99.61% (99.79%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [17][100/115]	Loss 0.579 (0.728)	prec_oim 88.28% (85.01%)	prec_score 99.90% (99.81%)	prec_finalscore(total) 0.00% (0.00%)	
+0.00012589254117941674
+1e-05
+1.0
+Epoch: [18][50/115]	Loss 0.609 (0.700)	prec_oim 86.09% (85.68%)	prec_score 99.80% (99.81%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [18][100/115]	Loss 0.573 (0.681)	prec_oim 88.75% (85.95%)	prec_score 99.90% (99.82%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.198 (0.228)	Data 0.001 (0.025)	
+Extract Features: [100/223]	Time 0.224 (0.219)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.207 (0.215)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.198 (0.212)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 78.7%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          74.7%       74.7%       74.7%
+  top-5          91.3%       91.3%       91.3%
+  top-10         96.7%       96.7%       96.7%
+0.00011220184543019636
+1e-05
+1.0
+Epoch: [19][50/115]	Loss 0.682 (0.732)	prec_oim 85.47% (85.30%)	prec_score 99.90% (99.81%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [19][100/115]	Loss 0.649 (0.696)	prec_oim 84.53% (85.64%)	prec_score 99.90% (99.82%)	prec_finalscore(total) 0.00% (0.00%)	
+0.0001
+1.0000000000000001e-07
+1.0
+Epoch: [20][50/115]	Loss 0.574 (0.699)	prec_oim 88.28% (85.89%)	prec_score 99.90% (99.80%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [20][100/115]	Loss 0.672 (0.688)	prec_oim 84.84% (85.88%)	prec_score 99.71% (99.82%)	prec_finalscore(total) 0.00% (0.00%)	
+8.912509381337455e-05
+1.0000000000000001e-07
+1.0
+Epoch: [21][50/115]	Loss 0.882 (0.663)	prec_oim 85.31% (86.28%)	prec_score 99.71% (99.86%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [21][100/115]	Loss 0.530 (0.665)	prec_oim 87.97% (86.29%)	prec_score 99.90% (99.85%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.193 (0.234)	Data 0.001 (0.026)	
+Extract Features: [100/223]	Time 0.215 (0.226)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.194 (0.220)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.197 (0.217)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 82.8%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          80.0%       80.0%       80.0%
+  top-5          92.7%       92.7%       92.7%
+  top-10         96.0%       96.0%       96.0%
+7.943282347242814e-05
+1.0000000000000001e-07
+1.0
+Epoch: [22][50/115]	Loss 0.466 (0.641)	prec_oim 90.94% (86.96%)	prec_score 99.71% (99.85%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [22][100/115]	Loss 0.635 (0.645)	prec_oim 89.38% (86.71%)	prec_score 99.71% (99.84%)	prec_finalscore(total) 0.00% (0.00%)	
+7.079457843841381e-05
+1.0000000000000001e-07
+1.0
+Epoch: [23][50/115]	Loss 0.555 (0.598)	prec_oim 88.28% (88.01%)	prec_score 99.80% (99.83%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [23][100/115]	Loss 0.547 (0.619)	prec_oim 84.53% (87.23%)	prec_score 100.00% (99.83%)	prec_finalscore(total) 0.00% (0.00%)	
+6.309573444801933e-05
+1.0000000000000001e-07
+1.0
+Epoch: [24][50/115]	Loss 0.579 (0.665)	prec_oim 87.03% (86.44%)	prec_score 100.00% (99.83%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [24][100/115]	Loss 0.439 (0.631)	prec_oim 90.47% (86.94%)	prec_score 99.90% (99.85%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.177 (0.237)	Data 0.001 (0.025)	
+Extract Features: [100/223]	Time 0.215 (0.223)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.202 (0.220)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.192 (0.217)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 82.8%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          80.0%       80.0%       80.0%
+  top-5          92.0%       92.0%       92.0%
+  top-10         97.3%       97.3%       97.3%
+5.6234132519034914e-05
+1.0000000000000001e-07
+1.0
+Epoch: [25][50/115]	Loss 0.510 (0.577)	prec_oim 89.53% (88.53%)	prec_score 99.80% (99.83%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [25][100/115]	Loss 0.699 (0.584)	prec_oim 83.13% (88.08%)	prec_score 99.90% (99.85%)	prec_finalscore(total) 0.00% (0.00%)	
+5.011872336272723e-05
+1.0000000000000001e-07
+1.0
+Epoch: [26][50/115]	Loss 0.599 (0.600)	prec_oim 87.81% (88.22%)	prec_score 99.90% (99.87%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [26][100/115]	Loss 0.800 (0.595)	prec_oim 85.47% (87.82%)	prec_score 99.80% (99.87%)	prec_finalscore(total) 0.00% (0.00%)	
+4.466835921509631e-05
+1.0000000000000001e-07
+1.0
+Epoch: [27][50/115]	Loss 0.604 (0.620)	prec_oim 86.72% (87.52%)	prec_score 100.00% (99.88%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [27][100/115]	Loss 0.425 (0.592)	prec_oim 90.16% (88.00%)	prec_score 99.90% (99.85%)	prec_finalscore(total) 0.00% (0.00%)	
+Extract Features: [50/223]	Time 0.235 (0.234)	Data 0.001 (0.025)	
+Extract Features: [100/223]	Time 0.180 (0.223)	Data 0.001 (0.013)	
+Extract Features: [150/223]	Time 0.220 (0.218)	Data 0.001 (0.009)	
+Extract Features: [200/223]	Time 0.222 (0.216)	Data 0.001 (0.007)	
+gallery--0049
+gallery--0099
+gallery--0149
+Mean AP: 82.8%
+CMC Scores    allshots      cuhk03  market1501
+  top-1          80.0%       80.0%       80.0%
+  top-5          91.3%       91.3%       91.3%
+  top-10         98.0%       98.0%       98.0%
+3.9810717055349735e-05
+1.0000000000000001e-07
+1.0
+Epoch: [28][50/115]	Loss 0.981 (0.610)	prec_oim 82.66% (87.86%)	prec_score 99.90% (99.83%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [28][100/115]	Loss 0.557 (0.578)	prec_oim 87.03% (88.24%)	prec_score 99.90% (99.84%)	prec_finalscore(total) 0.00% (0.00%)	
+3.5481338923357554e-05
+1.0000000000000001e-07
+1.0
+Epoch: [29][50/115]	Loss 0.467 (0.585)	prec_oim 89.69% (88.34%)	prec_score 99.80% (99.89%)	prec_finalscore(total) 0.00% (0.00%)	
+Epoch: [29][100/115]	Loss 0.494 (0.568)	prec_oim 88.59% (88.39%)	prec_score 100.00% (99.87%)	prec_finalscore(total) 0.00% (0.00%)	
