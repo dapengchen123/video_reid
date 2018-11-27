@@ -34,44 +34,39 @@ class SelfPoolingDir(nn.Module):
 
 
     def forward(self, probe_value, probe_base):
-#        pro_size = probe_value.size()
-#        pro_batch = pro_size[0]
-#        pro_len = pro_size[1]
-#
-#        ## generating Querys
-#        Qs = probe_base.view(pro_batch * pro_len, -1)
-#        Qs = self.featQ(Qs)
-#        Qs = self.featQ_bn(Qs)
-#        Qs = Qs.view(pro_batch, pro_len, -1)
-#
-#        Qmean = torch.mean(Qs, 1)
-#        Qs = Qmean.squeeze(1)
-#        Hs = Qmean.expand(pro_batch, pro_len, self.output_num)
-#
-#        ## generating Keys
-#        K = probe_base.view(pro_batch * pro_len, -1)
-#        K = self.featK(K)
-#        K = self.featK_bn(K)
-#        K = K.view(pro_batch, pro_len, -1)
-#
-#
-#        weights = Hs * K
-#        weights = weights.permute(0, 2, 1)
-#        weights = weights.contiguous()
-#        weights = weights.view(-1, pro_len)
-#        weights = self.softmax(weights)
-#        weights = weights.view(pro_batch, self.output_num, pro_len)
-#        weights = weights.permute(0, 2, 1)
-#
-#        pool_probe = probe_value * weights
-#        pool_probe = pool_probe.sum(1)
-#        pool_probe = pool_probe.squeeze(1)
+        pro_size = probe_value.size()
+        pro_batch = pro_size[0]
+        pro_len = pro_size[1]
 
-        pool_probe = torch.mean(probe_value,1)
+        ## generating Querys
+        Qs = probe_base.view(pro_batch * pro_len, -1)
+        Qs = self.featQ(Qs)
+        Qs = self.featQ_bn(Qs)
+        Qs = Qs.view(pro_batch, pro_len, -1)
+
+        Qmean = torch.mean(Qs, 1)
+        Qs = Qmean.squeeze(1)
+        Hs = Qmean.expand(pro_batch, pro_len, self.output_num)
+
+        ## generating Keys
+        K = probe_base.view(pro_batch * pro_len, -1)
+        K = self.featK(K)
+        K = self.featK_bn(K)
+        K = K.view(pro_batch, pro_len, -1)
+
+
+        weights = Hs * K
+        weights = weights.permute(0, 2, 1)
+        weights = weights.contiguous()
+        weights = weights.view(-1, pro_len)
+        weights = self.softmax(weights)
+        weights = weights.view(pro_batch, self.output_num, pro_len)
+        weights = weights.permute(0, 2, 1)
+
+        pool_probe = probe_value * weights
+        pool_probe = pool_probe.sum(1)
         pool_probe = pool_probe.squeeze(1)
-
-
         # pool_probe  Batch x featnum
         # Hs  Batch x hidden_num
 
-        return pool_probe, pool_probe
+        return pool_probe, Qs
