@@ -7,7 +7,7 @@ __all__ = [
     'oim',
     'OIM',
     'OIMLoss',
-    'PairwiseLoss'
+    'PairLoss'
 ]
 
 
