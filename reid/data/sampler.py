@@ -3,9 +3,11 @@ from collections import defaultdict
 
 import numpy as np
 import torch
+
 from torch.utils.data.sampler import (
     Sampler, SequentialSampler, RandomSampler, SubsetRandomSampler,
     WeightedRandomSampler)
+
 
 def No_index(a, b):
     assert isinstance(a, list)
@@ -25,7 +27,6 @@ class RandomIdentitySampler(Sampler):
 
     def __len__(self):
         return self.num_samples * self.num_instances
-
 
     def __iter__(self):
         indices = torch.randperm(self.num_samples)
@@ -48,6 +49,7 @@ class RandomPairSampler(Sampler):
         self.pid_cam = defaultdict(list)
         self.pid_index = defaultdict(list)
         self.num_samples = len(data_source)
+        # relabel
         for index, (_, _, _, pid, cam) in enumerate(data_source):
             self.index_pid[index] = pid
             self.pid_cam[pid].append(cam)
@@ -60,6 +62,7 @@ class RandomPairSampler(Sampler):
         indices = torch.randperm(self.num_samples)
         ret = []
         for i in indices:
+            i = int(i)
             _, _, i_label, i_pid, i_cam = self.data_source[i]
             ret.append(i)
             pid_i = self.index_pid[i]

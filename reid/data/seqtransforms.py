@@ -38,7 +38,6 @@ class RectScale(object):
         framelen = len(seqs[0])
         new_seqs = [[[] for _ in range(framelen)] for _ in range(modallen)]
 
-
         for modal_ind, modal in enumerate(seqs):
             for frame_ind, frame in enumerate(modal):
                 w, h = frame.size
@@ -48,7 +47,6 @@ class RectScale(object):
                     new_seqs[modal_ind][frame_ind] = frame.resize((self.width, self.height), self.interpolation)
 
         return new_seqs
-
 
 
 class RandomSizedRectCrop(object):
@@ -89,6 +87,7 @@ class RandomSizedRectCrop(object):
         scale = RectScale(self.height, self.width,
                           interpolation=self.interpolation)
         return scale(seqs)
+
 
 class RandomSizedEarser(object):
 
@@ -190,9 +189,7 @@ class ToTensor(object):
                     img = img.transpose(0, 1).transpose(0, 2).contiguous()
                     new_seqs[modal_ind][frame_ind] = img.float().div(255)
 
-
         return new_seqs
-
 
 
 class Normalize(object):
@@ -217,21 +214,3 @@ class Normalize(object):
                     new_seqs[modal_ind][frame_ind] = frame
 
         return new_seqs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

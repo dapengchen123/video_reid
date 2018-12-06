@@ -25,25 +25,23 @@ def get_data(dataset_name, split_id, data_dir, batch_size, seq_len, seq_srd, wor
 
     query_processor = SeqTestPreprocessor(dataset.query, dataset, seq_len,
                                           transform=T.Compose([T.RectScale(256, 128),
-                                          T.ToTensor(), normalizer]))
+                                                               T.ToTensor(), normalizer]))
 
     gallery_processor = SeqTestPreprocessor(dataset.gallery, dataset, seq_len,
                                             transform=T.Compose([T.RectScale(256, 128),
-                                            T.ToTensor(), normalizer]))
+                                                                 T.ToTensor(), normalizer]))
 
     if train_mode == 'cnn_rnn':
-        train_loader = DataLoader(train_processor, batch_size=batch_size, num_workers=workers, sampler=RandomPairSampler(train_set), pin_memory=True)
+        train_loader = DataLoader(train_processor, batch_size=batch_size, num_workers=workers,
+                                  sampler=RandomPairSampler(train_set), pin_memory=True)
     elif train_mode == 'cnn':
-        train_loader = DataLoader(train_processor, batch_size=batch_size, num_workers=workers, shuffle=True, pin_memory=True)
+        train_loader = DataLoader(train_processor, batch_size=batch_size, num_workers=workers,
+                                  shuffle=True, pin_memory=True)
     else:
         raise ValueError('no such train mode')
 
-    query_loader = DataLoader(
-        query_processor, batch_size=8, num_workers=workers, shuffle=False,
-        pin_memory=True)
+    query_loader = DataLoader(query_processor, batch_size=8, num_workers=workers, shuffle=False, pin_memory=True)
 
-    gallery_loader = DataLoader(
-        gallery_processor, batch_size=8, num_workers=workers, shuffle=False,
-        pin_memory=True)
+    gallery_loader = DataLoader(gallery_processor, batch_size=8, num_workers=workers, shuffle=False, pin_memory=True)
 
     return dataset, num_classes, train_loader, query_loader, gallery_loader
