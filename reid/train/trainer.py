@@ -1,13 +1,11 @@
 from __future__ import print_function, absolute_import
 import time
 import torch
-from torch.autograd import Variable
+from torch import nn
 from reid.evaluator import accuracy
 from utils.meters import AverageMeter
 import torch.nn.functional as F
-
-
-# mode decide how to train the model
+from utils import to_numpy
 
 
 class BaseTrainer(object):
@@ -16,6 +14,7 @@ class BaseTrainer(object):
         super(BaseTrainer, self).__init__()
         self.model = model
         self.criterion = criterion
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     def train(self, epoch, data_loader, optimizer1, optimizer2):
         self.model.train()
@@ -25,7 +24,6 @@ class BaseTrainer(object):
         losses = AverageMeter()
         precisions = AverageMeter()
         precisions1 = AverageMeter()
-        precisions2 = AverageMeter()
 
         end = time.time()
         for i, inputs in enumerate(data_loader):
@@ -33,13 +31,12 @@ class BaseTrainer(object):
 
             inputs, targets = self._parse_data(inputs)
 
+            loss, prec_oim, prec_score = self._forward(inputs, targets)
 
-            loss, prec_oim, prec_score, prec_finalscore = self._forward(inputs, targets)
-            losses.update(loss.data[0], targets.size(0))
+            losses.update(loss.item(), targets.size(0))
 
             precisions.update(prec_oim, targets.size(0))
             precisions1.update(prec_score, targets.size(0))
-            precisions2.update(prec_finalscore, targets.size(0))
 
             optimizer1.zero_grad()
             optimizer2.zero_grad()
@@ -55,12 +52,10 @@ class BaseTrainer(object):
                       'Loss {:.3f} ({:.3f})\t'
                       'prec_oim {:.2%} ({:.2%})\t'
                       'prec_score {:.2%} ({:.2%})\t'
-                      'prec_finalscore(total) {:.2%} ({:.2%})\t'
                       .format(epoch, i + 1, len(data_loader),
                               losses.val, losses.avg,
                               precisions.val, precisions.avg,
-                              precisions1.val, precisions1.avg,
-                              precisions2.val, precisions2.avg))
+                              precisions1.val, precisions1.avg))
 
     def _parse_data(self, inputs):
         raise NotImplementedError
@@ -81,8 +76,11 @@ class SEQTrainer(BaseTrainer):
 
     def _parse_data(self, inputs):
         imgs, flows, pids, _ = inputs
-        inputs = [Variable(imgs), Variable(flows)]
-        targets = Variable(pids).cuda()
+        imgs = imgs.to(self.device)
+        flows = flows.to(self.device)
+        inputs = [imgs, flows]
+
+        targets = pids.to(self.device)
         return inputs, targets
 
     def _forward(self, inputs, targets):
@@ -92,19 +90,18 @@ class SEQTrainer(BaseTrainer):
 
             loss, outputs = self.regular_criterion(out_feat, targets)
             prec, = accuracy(outputs.data, targets.data)
-            prec = prec[0]
+            # prec = prec[0]
 
             return loss, prec, 0, 0
 
         elif self.mode == 'cnn_rnn':
 
-
-            feat, feat_raw  = self.model(inputs[0], inputs[1], self.mode)
+            feat, feat_raw = self.model(inputs[0], inputs[1], self.mode)
             featsize = feat.size()
             featbatch = featsize[0]
             seqlen = featsize[1]
 
-            ## expand the target label ID loss
+            # expand the target label ID loss
             featX = feat.view(featbatch * seqlen, -1)
 
             targetX = targets.unsqueeze(1)
@@ -115,9 +112,9 @@ class SEQTrainer(BaseTrainer):
             loss_id, outputs_id = self.regular_criterion(featX, targetX)
 
             prec_id, = accuracy(outputs_id.data, targetX.data)
-            prec_id = prec_id[0]
+            # prec_id = prec_id[0]
 
-            ## verification label
+            # verification label
 
             featsize = feat.size()
             sample_num = featsize[0]
@@ -138,10 +135,9 @@ class SEQTrainer(BaseTrainer):
 
             loss_ver, prec_ver = self.criterion(encodemat, tar_probe, tar_gallery)
 
+            loss = loss_id * self.rate + 100 * loss_ver
 
-            loss = loss_id*self.rate + 100*loss_ver
-
-            return loss, prec_id, prec_ver, 0
+            return loss, prec_id, prec_ver
         else:
             raise ValueError("Unsupported loss:", self.criterion)
 

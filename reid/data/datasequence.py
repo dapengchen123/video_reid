@@ -20,7 +20,6 @@ def _pluckseq(identities, indices, seq_len, seq_str):
     return ret
 
 
-
 class Datasequence(object):
     def __init__(self, root, split_id= 0):
         self.root = root
@@ -69,9 +68,6 @@ class Datasequence(object):
         self.num_train_ids = len(train_pids)
         self.num_val_ids = len(val_pids)
         self.num_trainval_ids = len(trainval_pids)
-
-
-
 
         if verbose:
             print(self.__class__.__name__, "dataset loaded")

@@ -7,7 +7,6 @@ from sklearn.metrics import average_precision_score
 from utils import to_torch, to_numpy
 
 
-
 def _unique_sample(ids_dict, num):
     mask = np.zeros(num, dtype=np.bool)
     for _, indices in ids_dict.items():
@@ -115,6 +114,7 @@ def mean_ap(distmat, query_ids=None, gallery_ids=None,
         raise RuntimeError("No valid query")
     return np.mean(aps)
 
+
 def accuracy(output, target, topk=(1,)):
     output, target = to_torch(output), to_torch(target)
     maxk = max(topk)
@@ -129,4 +129,3 @@ def accuracy(output, target, topk=(1,)):
         correct_k = correct[:k].view(-1).float().sum(0)
         ret.append(correct_k.mul_(1. / batch_size))
     return ret
-

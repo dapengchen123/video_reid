@@ -16,6 +16,7 @@ flowname = 'Farneback'
 class infostruct(object):
     pass
 
+
 class iLIDSVIDSEQUENCE(Datasequence):
 
     def __init__(self, root,  split_id=0, seq_len=12, seq_srd=6, num_val=1, download=False):
@@ -29,13 +30,16 @@ class iLIDSVIDSEQUENCE(Datasequence):
 
         self.load(seq_len, seq_srd, num_val)
 
-        self.query, query_pid, query_camid, query_num = self._pluckseq_cam(self.identities, self.split['query'], seq_len, seq_srd, 0)
+        self.query, query_pid, query_camid, query_num = self._pluckseq_cam(self.identities, self.split['query'],
+                                                                           seq_len, seq_srd, 0)
         self.queryinfo = infostruct()
         self.queryinfo.pid = query_pid
         self.queryinfo.camid = query_camid
         self.queryinfo.tranum = query_num
 
-        self.gallery, gallery_pid, gallery_camid, gallery_num = self._pluckseq_cam(self.identities, self.split['gallery'], seq_len, seq_srd, 1)
+        self.gallery, gallery_pid, gallery_camid, gallery_num = self._pluckseq_cam(self.identities,
+                                                                                   self.split['gallery'],
+                                                                                   seq_len, seq_srd, 1)
         self.galleryinfo = infostruct()
         self.galleryinfo.pid = gallery_pid
         self.galleryinfo.camid = gallery_camid
@@ -44,7 +48,6 @@ class iLIDSVIDSEQUENCE(Datasequence):
     @property
     def other_dir(self):
         return osp.join(self.root, 'others')
-                
 
     def download(self):
 
@@ -71,7 +74,6 @@ class iLIDSVIDSEQUENCE(Datasequence):
         exdir2 = osp.join(raw_dir, flowname)
         fpath1 = osp.join(raw_dir, datasetname + '.tar')
         fpath2 = osp.join(raw_dir, flowname + '.tar')
-
 
         if not osp.isdir(exdir1):
             print("Extracting tar file")
@@ -174,7 +176,6 @@ class iLIDSVIDSEQUENCE(Datasequence):
 
             write_json(meta,  osp.join(self.root, 'meta.json'))
 
-
             # Consider fixed training and testing split
             splitmat_name = osp.join(exdir1, 'train-test people splits', 'train_test_splits_ilidsvid.mat')
             data = sio.loadmat(splitmat_name)
@@ -202,8 +203,7 @@ class iLIDSVIDSEQUENCE(Datasequence):
             pid_images = identities[pid]
             cam_images = pid_images[camid]
             seqall = len(cam_images)
-            seq_inds = [(start_ind, start_ind + seq_len) \
-                        for start_ind in range(0, seqall - seq_len, seq_str)]
+            seq_inds = [(start_ind, start_ind + seq_len) for start_ind in range(0, seqall - seq_len, seq_str)]
             if not seq_inds:
                 seq_inds = [(0, seqall)]
             for seq_ind in seq_inds:
@@ -212,21 +212,3 @@ class iLIDSVIDSEQUENCE(Datasequence):
             cam_id.append(camid)
             tra_num.append(len(seq_inds))
         return ret, per_id, cam_id, tra_num
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

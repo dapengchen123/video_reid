@@ -4,7 +4,6 @@ import torch
 from PIL import Image
 
 
-
 class SeqTrainPreprocessor(object):
     def __init__(self, seqset, dataset, seq_len, transform=None):
         super(SeqTrainPreprocessor, self).__init__()
@@ -17,7 +16,6 @@ class SeqTrainPreprocessor(object):
 
     def __len__(self):
         return len(self.seqset)
-
 
     def __getitem__(self, indices):
         if isinstance(indices, (tuple, list)):
@@ -39,7 +37,7 @@ class SeqTrainPreprocessor(object):
             imgseq.append(imgrgb)
             flowseq.append(flowrgb)
 
-        while (len(imgseq) < self.seq_len):
+        while len(imgseq) < self.seq_len:
             imgseq.append(imgrgb)
             flowseq.append(flowrgb)
 
@@ -53,7 +51,6 @@ class SeqTrainPreprocessor(object):
         flow_tensor = torch.stack(seq[1], 0)
 
         return img_tensor, flow_tensor, label, camid
-
 
 
 class SeqTestPreprocessor(object):
@@ -90,7 +87,7 @@ class SeqTestPreprocessor(object):
             imgseq.append(imgrgb)
             flowseq.append(flowrgb)
 
-        while (len(imgseq) < self.seq_len):
+        while len(imgseq) < self.seq_len:
             imgseq.append(imgrgb)
             flowseq.append(flowrgb)
 
