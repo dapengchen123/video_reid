@@ -3,11 +3,10 @@ import time
 import torch
 from torch.autograd import Variable
 from utils.meters import AverageMeter
-from utils import to_numpy
+from utils import to_torch
 from .eva_functions import cmc, mean_ap
 import numpy as np
 import torch.nn.functional as F
-
 
 
 def evaluate_seq(distmat, query_pids, query_camids, gallery_pids, gallery_camids, cmc_topk=(1, 5, 10)):
@@ -46,10 +45,9 @@ def evaluate_seq(distmat, query_pids, query_camids, gallery_pids, gallery_camids
     return mAP
 
 
-
 class ATTEvaluator(object):
 
-    def __init__(self, cnn_model, att_model, classifier_model,mode):
+    def __init__(self, cnn_model, att_model, classifier_model, mode):
         super(ATTEvaluator, self).__init__()
         self.cnn_model = cnn_model
         self.att_model = att_model
@@ -61,7 +59,6 @@ class ATTEvaluator(object):
         self.cnn_model.eval()
         self.att_model.eval()
 
-
         batch_time = AverageMeter()
         data_time = AverageMeter()
         end = time.time()
@@ -70,37 +67,39 @@ class ATTEvaluator(object):
         allfeatures_raw = 0
 
         for i, (imgs, flows, _, _) in enumerate(data_loader):
-            data_time.update(time.time() - end)
-            imgs = Variable(imgs, volatile=True)
-            flows = Variable(flows, volatile=True)
+            imgs = to_torch(imgs)
+            flows = to_torch(flows)
+            device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+            imgs = imgs.to(device)
+            flows = flows.to(device)
+            with torch.no_grad():
+                if i == 0:
+                    out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
+                    out_feat, out_raw = self.att_model.selfpooling_model(out_feat, out_raw)
+                    allfeatures = out_feat
+                    allfeatures_raw = out_raw
+                    preimgs = imgs
+                    preflows = flows
+                elif imgs.size(0) < data_loader.batch_size:
+                    flaw_batchsize = imgs.size(0)
+                    cat_batchsize = data_loader.batch_size - flaw_batchsize
+                    imgs = torch.cat((imgs, preimgs[0:cat_batchsize]), 0)
+                    flows = torch.cat((flows, preflows[0:cat_batchsize]), 0)
 
-            if i == 0:
-                out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
-                out_feat, out_raw = self.att_model.selfpooling_model(out_feat, out_raw)
-                allfeatures = out_feat
-                allfeatures_raw = out_raw
-                preimgs = imgs
-                preflows = flows
-            elif imgs.size(0) < data_loader.batch_size:
-                flaw_batchsize = imgs.size(0)
-                cat_batchsize = data_loader.batch_size - flaw_batchsize
-                imgs = torch.cat((imgs, preimgs[0:cat_batchsize]), 0)
-                flows = torch.cat((flows, preflows[0:cat_batchsize]), 0)
+                    out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
+                    out_feat, out_raw = self.att_model.selfpooling_model(out_feat, out_raw)
 
-                out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
-                out_feat, out_raw = self.att_model.selfpooling_model(out_feat, out_raw)
+                    out_feat = out_feat[0:flaw_batchsize]
+                    out_raw = out_feat[0:flaw_batchsize]
 
-                out_feat = out_feat[0:flaw_batchsize]
-                out_raw = out_feat[0:flaw_batchsize]
+                    allfeatures = torch.cat((allfeatures, out_feat), 0)
+                    allfeatures_raw = torch.cat((allfeatures_raw, out_raw), 0)
+                else:
+                    out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
+                    out_feat, out_raw = self.att_model.selfpooling_model(out_feat, out_raw)
 
-                allfeatures = torch.cat((allfeatures, out_feat), 0)
-                allfeatures_raw = torch.cat((allfeatures_raw, out_raw), 0)
-            else:
-                out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
-                out_feat, out_raw = self.att_model.selfpooling_model(out_feat, out_raw)
-
-                allfeatures = torch.cat((allfeatures, out_feat), 0)
-                allfeatures_raw = torch.cat((allfeatures_raw, out_raw), 0)
+                    allfeatures = torch.cat((allfeatures, out_feat), 0)
+                    allfeatures_raw = torch.cat((allfeatures_raw, out_raw), 0)
 
             batch_time.update(time.time() - end)
             end = time.time()
@@ -117,11 +116,9 @@ class ATTEvaluator(object):
 
     def evaluate(self, query_loader, gallery_loader, queryinfo, galleryinfo):
 
-
         self.cnn_model.eval()
         self.att_model.eval()
         self.classifier_model.eval()
-
 
         querypid = queryinfo.pid
         querycamid = queryinfo.camid
@@ -153,45 +150,45 @@ class ATTEvaluator(object):
         gallery_time = AverageMeter()
         end = time.time()
 
+        for i, (imgs, flows, _, _) in enumerate(gallery_loader):
+            imgs = to_torch(imgs)
+            flows = to_torch(flows)
+            device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+            imgs = imgs.to(device)
+            flows = flows.to(device)
 
-        for i, (imgs, flows, _, _ ) in enumerate(gallery_loader):
+            with torch.no_grad():
+                seqnum = imgs.size(0)
+                if i == 0:
+                    preimgs = imgs
+                    preflows = flows
 
-            imgs = Variable(imgs, volatile=True)
-            flows = Variable(flows, volatile=True)
-            seqnum = imgs.size(0)
+                if gallery_empty:
+                    out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
 
-            if i == 0:
-                preimgs = imgs
-                preflows = flows
+                    gallery_resfeatures = out_feat
+                    gallery_resraw = out_raw
 
-            if gallery_empty:
-                out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
+                    gallery_empty = False
 
-                gallery_resfeatures = out_feat
-                gallery_resraw = out_raw
+                elif imgs.size(0) < gallery_loader.batch_size:
+                    flaw_batchsize = imgs.size(0)
+                    cat_batchsize = gallery_loader.batch_size - flaw_batchsize
+                    imgs = torch.cat((imgs, preimgs[0:cat_batchsize]), 0)
+                    flows = torch.cat((flows, preflows[0:cat_batchsize]), 0)
+                    out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
 
-                gallery_empty = False
+                    out_feat = out_feat[0:flaw_batchsize]
+                    out_raw  = out_raw[0:flaw_batchsize]
 
-            elif imgs.size(0) < gallery_loader.batch_size:
-                flaw_batchsize = imgs.size(0)
-                cat_batchsize = gallery_loader.batch_size - flaw_batchsize
-                imgs = torch.cat((imgs, preimgs[0:cat_batchsize]), 0)
-                flows = torch.cat((flows, preflows[0:cat_batchsize]), 0)
-                out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
+                    gallery_resfeatures = torch.cat((gallery_resfeatures, out_feat), 0)
+                    gallery_resraw = torch.cat((gallery_resraw, out_raw), 0)
 
+                else:
+                    out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
 
-                out_feat = out_feat[0:flaw_batchsize]
-                out_raw  = out_raw[0:flaw_batchsize]
-
-                gallery_resfeatures = torch.cat((gallery_resfeatures, out_feat), 0)
-                gallery_resraw = torch.cat((gallery_resraw, out_raw), 0)
-
-            else:
-                out_feat, out_raw = self.cnn_model(imgs, flows, self.mode)
-
-                gallery_resfeatures = torch.cat((gallery_resfeatures, out_feat), 0)
-                gallery_resraw = torch.cat((gallery_resraw, out_raw), 0)
-
+                    gallery_resfeatures = torch.cat((gallery_resfeatures, out_feat), 0)
+                    gallery_resraw = torch.cat((gallery_resraw, out_raw), 0)
 
             gallery_resize = gallery_resize + seqnum
 
@@ -252,4 +249,3 @@ class ATTEvaluator(object):
                 end = time.time()
 
         return evaluate_seq(single_distmat, querypid, querycamid, gallerypid, gallerycamid)
-
