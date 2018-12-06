@@ -225,7 +225,7 @@ if __name__ == '__main__':
     parser.add_argument('--train_mode', type=str, default='cnn_rnn',
                         choices=['cnn_rnn', 'cnn'])
     parser.add_argument('--start-epoch', type=int, default=0)
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--epochs', type=int, default=30)
     parser.add_argument('--evaluate', type=int, default=0)
     # misc
     working_dir = osp.dirname(osp.abspath(__file__))
