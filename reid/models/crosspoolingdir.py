@@ -3,6 +3,7 @@ import torch
 from torch import nn
 import torch.nn.init as init
 
+
 class CrossPoolingDir(nn.Module):
 
     def __init__(self, input_num, output_num):
@@ -13,13 +14,13 @@ class CrossPoolingDir(nn.Module):
         self.featK = nn.Linear(self.input_num, self.output_num)
         self.featK_bn = nn.BatchNorm1d(self.output_num)
 
-        ## Softmax
+        # Softmax
         self.softmax = nn.Softmax()
 
-        init.kaiming_normal(self.featK.weight, mode='fan_out')
-        init.constant(self.featK.bias, 0)
-        init.constant(self.featK_bn.weight, 1)
-        init.constant(self.featK_bn.bias, 0)
+        init.kaiming_uniform_(self.featK.weight, mode='fan_out')
+        init.constant_(self.featK.bias, 0)
+        init.constant_(self.featK_bn.weight, 1)
+        init.constant_(self.featK_bn.bias, 0)
 
     def forward(self,  gallery_value, gallery_base, querys):
 
@@ -27,7 +28,7 @@ class CrossPoolingDir(nn.Module):
         gal_batch = gal_size[0]
         gal_len = gal_size[1]
 
-        ## Linear self-transorfmation
+        # Linear self-transorfmation
         Q_size = querys.size()
         pro_batch = Q_size[0]
         Q_featnum = Q_size[1]
@@ -61,24 +62,12 @@ class CrossPoolingDir(nn.Module):
         # gallery : gal_batch x gal_len x Q_featnum
         gallery_value = gallery_value.permute(0, 2, 1)
         # gallery : gal_batch x Q_featnum x gal_len
-        gallery_value  = gallery_value.contiguous()
+        gallery_value = gallery_value.contiguous()
         gallery_value = gallery_value.unsqueeze(0)
         # gallery : 1 x gal_batch x Q_featnum x gal_len
         gallery_value = gallery_value.expand(pro_batch, gal_batch, Q_featnum, gal_len)
         # gallery : pro_batch x gal_batch x Q_featnum x gal_len
         pool_gallery = (weights * gallery_value).sum(3)
-        pool_gallery = pool_gallery.squeeze(3)
+        # pool_gallery = pool_gallery.squeeze(3)
 
         return pool_gallery
-
-
-
-
-
-
-
-
-
-
-
-

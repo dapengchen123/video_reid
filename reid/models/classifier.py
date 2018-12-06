@@ -22,11 +22,11 @@ class Classifier(nn.Module):
         if self.drop > 0:
             self.droplayer = nn.Dropout(drop)
 
-        init.constant(self.classifierBN.weight, 1)
-        init.constant(self.classifierBN.bias, 0)
+        init.constant_(self.classifierBN.weight, 1)
+        init.constant_(self.classifierBN.bias, 0)
 
-        init.normal(self.classifierlinear.weight, std=0.001)
-        init.constant(self.classifierlinear.bias, 0)
+        init.normal_(self.classifierlinear.weight, std=0.001)
+        init.constant_(self.classifierlinear.bias, 0)
 
     def forward(self, probe, gallery):
         S_gallery = gallery.size()
@@ -84,7 +84,3 @@ class Classifier(nn.Module):
             cls_encode = cls_encode.view(N_probe, N_gallery, self.class_num)
 
         return cls_encode
-
-
-
-

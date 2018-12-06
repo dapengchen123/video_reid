@@ -8,6 +8,7 @@ import torchvision
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152']
 
+
 class ResNet(nn.Module):
     __factory = {
         18: torchvision.models.resnet18,
@@ -30,7 +31,7 @@ class ResNet(nn.Module):
             raise KeyError("Unsupported depth:", depth)
 
         conv0 = nn.Conv2d(2, 64, kernel_size=7, stride=2, padding=3, bias=False)
-        init.kaiming_normal(conv0.weight, mode='fan_out')
+        init.kaiming_uniform_(conv0.weight, mode='fan_out')
 
         self.conv0 = conv0
         self.base = ResNet.__factory[depth](pretrained=pretrained)
@@ -46,10 +47,10 @@ class ResNet(nn.Module):
             if self.has_embedding:
                 self.feat = nn.Linear(out_planes, self.num_features)
                 self.feat_bn = nn.BatchNorm1d(self.num_features)
-                init.kaiming_normal(self.feat.weight, mode='fan_out')
-                init.constant(self.feat.bias, 0)
-                init.constant(self.feat_bn.weight, 1)
-                init.constant(self.feat_bn.bias, 0)
+                init.kaiming_uniform_(self.feat.weight, mode='fan_out')
+                init.constant_(self.feat.bias, 0)
+                init.constant_(self.feat_bn.weight, 1)
+                init.constant_(self.feat_bn.bias, 0)
             else:
                 self.num_features = out_planes
 
@@ -67,7 +68,7 @@ class ResNet(nn.Module):
         seq_len = img_size[1]
         imgs = imgs.view(-1, img_size[2], img_size[3], img_size[4])
         motions = motions.view(-1, motion_size[2], motion_size[3], motion_size[4])
-        motions = motions[:, 1:3]
+        motions = motions[:, 1:3]  # only choose 2 chanel(1,2) for opticflow
 
         for name, module in self.base._modules.items():
 
@@ -96,13 +97,14 @@ class ResNet(nn.Module):
         if self.dropout > 0:
             x = self.drop(x)
 
-
         if mode == 'cnn_rnn':
-            x = x / x.norm(2, 1).expand_as(x)
+            # x = x / x.norm(2, 1).expand_as(x)
+            x = x / x.norm(2, 1).unsqueeze(1).expand_as(x)
+            x = x.squeeze(1)
             x = x.view(batch_sz, seq_len, -1)
             return x, raw
         elif mode == 'cnn':
-            x = x / x.norm(2, 1).expand_as(x)
+            x = x / x.norm(2, 1).unsqueeze(1).expand_as(x)
             x = x.view(batch_sz, seq_len, -1)
             x = torch.squeeze(torch.mean(x, 1), 1)
             return x
@@ -110,7 +112,7 @@ class ResNet(nn.Module):
     def reset_params(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                init.kaiming_normal(m.weight, mode='fan_out')
+                init.kaiming_uniform_(m.weight, mode='fan_out')
                 if m.bias is not None:
                     init.constant(m.bias, 0)
             elif isinstance(m, nn.BatchNorm2d):
@@ -121,20 +123,22 @@ class ResNet(nn.Module):
                 if m.bias is not None:
                     init.constant(m.bias, 0)
 
+
 def resnet18(**kwargs):
     return ResNet(18, **kwargs)
+
 
 def resnet34(**kwargs):
     return ResNet(34, **kwargs)
 
+
 def resnet50(**kwargs):
     return ResNet(50, **kwargs)
+
 
 def resnet101(**kwargs):
     return ResNet(101, **kwargs)
 
+
 def resnet152(**kwargs):
     return ResNet(152, **kwargs)
-
-
-

@@ -4,7 +4,6 @@ from reid.models import SelfPoolingDir
 from reid.models import CrossPoolingDir
 
 
-
 class AttModuleDir(nn.Module):
 
     def __init__(self, input_num, output_num):
@@ -13,7 +12,7 @@ class AttModuleDir(nn.Module):
         self.input_num = input_num
         self.output_num = output_num
 
-        ## attention modules
+        # attention modules
 
         self.selfpooling_model = SelfPoolingDir(self.input_num, self.output_num)
         self.crosspooling_model = CrossPoolingDir(self.input_num, self.output_num)
@@ -38,9 +37,10 @@ class AttModuleDir(nn.Module):
         gallery_input = input[:, 1, :, :]
         gallery_input = gallery_input.contiguous()
 
-        ## self-pooling
+        # self-pooling
         pooled_probe, hidden_probe = self.selfpooling_model(probe_x, probe_input)
-        pooled_gallery, hidden_gallery = self.selfpooling_model(gallery_x, gallery_input) 
+        pooled_gallery, hidden_gallery = self.selfpooling_model(gallery_x, gallery_input)
+
         probesize = pooled_probe.size()
         gallerysize = pooled_gallery.size()
         probe_batch = probesize[0]
@@ -49,9 +49,6 @@ class AttModuleDir(nn.Module):
         pooled_gallery.unsqueeze(0)
         pooled_gallery = pooled_gallery.expand(probe_batch, gallery_batch, gallery_num)
 
-
-
-        ## cross-pooling
+        # cross-pooling
 
         return pooled_probe, pooled_gallery
-
